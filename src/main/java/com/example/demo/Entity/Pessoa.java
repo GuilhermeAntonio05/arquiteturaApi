@@ -37,6 +37,10 @@ public class Pessoa {
 	@JoinColumn(name = "PESSOA_ID ")
 	private List<Endereco> endereco;
 	
+	@OneToMany
+	@JoinColumn(name = "PESSOA_ID ")
+	private List<Documento> documento;
+	
 	@Column
 	private double salario;
 	
@@ -44,38 +48,28 @@ public class Pessoa {
 	private String dataNascimento;
 	
 	@Column
-	private String cpf;
-	
-	@Column
-	private String cnh;
-	
-	@Column
-	private String oab;
-	
-	@Column
 	private String inscricaoFederal;
 	
 	public Pessoa() {
 	}
 	
-	public Pessoa(String nome, Setor setor, double salario, String dataNascimento, String cpf, String cnh, String oab,
-			String inscricaoFederal, List<Contato> contato, List<Endereco> endereco) {
+	public Pessoa(String nome, Setor setor, double salario, String dataNascimento,
+			String inscricaoFederal, List<Contato> contato, List<Endereco> endereco,List<Documento> documento) {
 		super();
+		this.documento = documento;
 		this.endereco = endereco;
 		this.contato = contato;
 		this.nome = nome;
 		this.setor = setor;
 		this.salario = salario;
 		this.dataNascimento = dataNascimento;
-		this.cpf = cpf;
-		this.cnh = cnh;
-		this.oab = oab;
 		this.inscricaoFederal = inscricaoFederal;
 	}
 
-	public Pessoa(long id, String nome, Setor setor, double salario, String dataNascimento, String cpf, String cnh,
-			String oab, String inscricaoFederal, List<Contato> contato, List<Endereco> endereco) {
+	public Pessoa(long id, String nome, Setor setor, double salario, String dataNascimento, String inscricaoFederal,
+			List<Contato> contato, List<Endereco> endereco,List<Documento> documento) {
 		super();
+		this.documento = documento;
 		this.endereco = endereco;
 		this.contato = contato;
 		this.id = id;
@@ -83,9 +77,6 @@ public class Pessoa {
 		this.setor = setor;
 		this.salario = salario;
 		this.dataNascimento = dataNascimento;
-		this.cpf = cpf;
-		this.cnh = cnh;
-		this.oab = oab;
 		this.inscricaoFederal = inscricaoFederal;
 	}
 
@@ -121,30 +112,6 @@ public class Pessoa {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getCnh() {
-		return cnh;
-	}
-
-	public void setCnh(String cnh) {
-		this.cnh = cnh;
-	}
-
-	public String getOab() {
-		return oab;
-	}
-
-	public void setOab(String oab) {
-		this.oab = oab;
-	}
-
 	public String getInscricaoFederal() {
 		return inscricaoFederal;
 	}
@@ -173,11 +140,19 @@ public class Pessoa {
 		return endereco;
 	}
 
+	public List<Documento> getDocumento() {
+		return documento;
+	}
+	
+	public void setDocumento(List<Documento> documento) {
+		this.documento = documento;
+	}
+	
 	@Override
 	public String toString() {
 		return "Pessoa [id=" + id + ", nome=" + nome + ", setor=" + setor + ", contato=" + contato + ", endereco="
-				+ endereco + ", salario=" + salario + ", dataNascimento=" + dataNascimento + ", cpf=" + cpf + ", cnh="
-				+ cnh + ", oab=" + oab + ", inscricaoFederal=" + inscricaoFederal + "]";
+				+ endereco + ", documento=" + documento + ", salario=" + salario + ", dataNascimento=" + dataNascimento
+				+ ", inscricaoFederal=" + inscricaoFederal + "]";
 	}
 	
 }

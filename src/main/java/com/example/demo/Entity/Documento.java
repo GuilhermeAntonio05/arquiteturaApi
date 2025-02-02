@@ -9,31 +9,31 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_contato")
-public class Contato {
+@Table(name = "tb_documento")
+public class Documento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-
+	private Long id;
+	
 	@ManyToOne
 	private Pessoa pessoa;
-	
+
 	@Column
 	private String tipo;
 
 	@Column
 	private String valor;
 
-	public Contato() {
+	public Documento() {
 	}
-
-	public Contato(String tipo, String valor) {
+	
+	public Documento(String tipo, String valor) {
 		this.tipo = tipo;
 		this.valor = valor;
 	}
 
-	public Contato(long id, String tipo, String valor) {
+	public Documento(long id, String tipo, String valor) {
 		this.id = id;
 		this.tipo = tipo;
 		this.valor = valor;
@@ -61,7 +61,7 @@ public class Contato {
 
 	@Override
 	public String toString() {
-		return "Contato [id=" + id + ", tipo=" + tipo + ", Valor=" + valor + "]";
+		return "Documento [id=" + id + ", tipo=" + tipo + ", Valor=" + valor + "]";
 	}
-
+	
 }

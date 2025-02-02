@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Entity.Pessoa;
 import com.example.demo.Repository.ContatoRepository;
+import com.example.demo.Repository.DocumentoRepository;
 import com.example.demo.Repository.EnderecoRepository;
 import com.example.demo.Repository.PessoaRepository;
 import com.example.demo.Repository.SetorRepository;
@@ -36,6 +37,9 @@ public class PessoaController {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private DocumentoRepository documentoRepository;
 
 	@GetMapping
 	public List<Pessoa> listarPessoas() {
@@ -51,7 +55,10 @@ public class PessoaController {
 
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void criarPessoa(@RequestBody Pessoa pessoa) {
+	public void criarPessoa(
+			@RequestBody Pessoa pessoa
+			) {
+		documentoRepository.saveAll(pessoa.getDocumento());
 		enderecoRepository.saveAll(pessoa.getEndereco());
 		contatoRepository.saveAll(pessoa.getContato());
 		setorRepository.save(pessoa.getSetor());
@@ -77,19 +84,19 @@ public class PessoaController {
 	}
 
 	private void getPessoa(Pessoa pessoaExistente, Pessoa novaPessoa) {
-		pessoaExistente.setCnh(novaPessoa.getCnh());
-		pessoaExistente.setCpf(novaPessoa.getCpf());
 		pessoaExistente.setDataNascimento(novaPessoa.getDataNascimento());
 		pessoaExistente.setInscricaoFederal(novaPessoa.getInscricaoFederal());
 		pessoaExistente.setNome(novaPessoa.getNome());
-		pessoaExistente.setOab(novaPessoa.getOab());
 		pessoaExistente.setSalario(novaPessoa.getSalario());
 		pessoaExistente.setSetor(novaPessoa.getSetor());
 		pessoaExistente.setContato(novaPessoa.getContato());
 		pessoaExistente.setEndereco(novaPessoa.getEndereco());
-		enderecoRepository.saveAll(pessoaExistente.getEndereco());
+		pessoaExistente.setDocumento(novaPessoa.getDocumento());
+		
 		contatoRepository.saveAll(pessoaExistente.getContato());
+		enderecoRepository.saveAll(pessoaExistente.getEndereco());
 		setorRepository.save(pessoaExistente.getSetor());
+		documentoRepository.saveAll(pessoaExistente.getDocumento());
 		pessoaRepository.save(pessoaExistente);
 	}
 
