@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,11 +13,10 @@ public class Setor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@PrimaryKeyJoinColumn
 	private Long id;
 
-	@OneToOne
-	private Pessoa pessoa;
+	@Column
+	private String Cargo;
 
 	@Column
 	private String cargaHoraria;
@@ -27,24 +24,25 @@ public class Setor {
 	public Setor() {
 	}
 
-	public Setor(String cargaHoraria) {
+	public Setor( String cargo, String cargaHoraria) {
 		super();
+		this.Cargo = cargo;
 		this.cargaHoraria = cargaHoraria;
 	}
 
-	public Setor(Long id, Pessoa pessoa, String cargaHoraria) {
+	public Setor(Long id, String cargo, String cargaHoraria) {
 		super();
 		this.id = id;
-		this.pessoa = pessoa;
+		this.Cargo = cargo;
 		this.cargaHoraria = cargaHoraria;
 	}
 
-	public Pessoa getPessoa() {
-		return pessoa;
+	public String getCargo() {
+		return Cargo;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setCargo(String cargo) {
+		Cargo = cargo;
 	}
 
 	public String getCargaHoraria() {
@@ -61,7 +59,6 @@ public class Setor {
 
 	@Override
 	public String toString() {
-		return "Setor [id=" + id + ", pessoa=" + pessoa + ", cargaHoraria=" + cargaHoraria + "]";
+		return "Setor [id=" + id + ", Cargo=" + Cargo + ", cargaHoraria=" + cargaHoraria + "]";
 	}
-
 }

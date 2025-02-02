@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_pessoa")
+
 public class Pessoa {
 
 	@Id
@@ -26,7 +27,6 @@ public class Pessoa {
 	
 	@Column
 	private double salario;
-	
 	
 	@Column
 	private String dataNascimento;

@@ -26,14 +26,13 @@ public class PessoaController {
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
-	
+
 	@Autowired
 	private SetorRepository setorRepository;
 
 	@GetMapping
 	public List<Pessoa> listarPessoas() {
 		List<Pessoa> pessoa = pessoaRepository.findAll();
-		
 		return pessoa;
 	}
 
@@ -42,16 +41,12 @@ public class PessoaController {
 		Optional<Pessoa> pessoa = pessoaRepository.findById(id);
 		return pessoa;
 	}
-	
+
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void criarPessoa(
-			//@RequestBody Pessoa pessoa
-			) {
-		Setor setor = new Setor("12:00");
-		Pessoa pessoa1 = new Pessoa("Guilherme",setor,2000,"05/04/2007","12345678","cnh","oab","inscFederal");
-		setorRepository.save(setor);
-		pessoaRepository.save(pessoa1);
+	public void criarPessoa(@RequestBody Pessoa pessoa) {
+		setorRepository.save(pessoa.getSetor());
+		pessoaRepository.save(pessoa);
 	}
 
 	@DeleteMapping("/{id}")
@@ -73,8 +68,15 @@ public class PessoaController {
 	}
 
 	private void getPessoa(Pessoa PessoaExistente, Pessoa NovaPessoa) {
-		PessoaExistente.setNome(NovaPessoa.getNome());
+		PessoaExistente.setCnh(NovaPessoa.getCnh());
 		PessoaExistente.setCpf(NovaPessoa.getCpf());
+		PessoaExistente.setDataNascimento(NovaPessoa.getDataNascimento());
+		PessoaExistente.setInscricaoFederal(NovaPessoa.getInscricaoFederal());
+		PessoaExistente.setNome(NovaPessoa.getNome());
+		PessoaExistente.setOab(NovaPessoa.getOab());
+		PessoaExistente.setSalario(NovaPessoa.getSalario());
+		PessoaExistente.setSetor(NovaPessoa.getSetor());
+		setorRepository.save(PessoaExistente.getSetor());
 		pessoaRepository.save(PessoaExistente);
 	}
 
