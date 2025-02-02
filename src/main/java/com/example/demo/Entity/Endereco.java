@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,6 +14,9 @@ public class Endereco {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	
+	@ManyToOne
+	private Pessoa pessoa;
 	
 	@Column
 	private String numero;
@@ -37,7 +41,6 @@ public class Endereco {
 
 	public Endereco( String numero, String rua, String bairro, String complemento, String estado,
 			String cep) {
-	//	this.pessoa = pessoa;
 		this.numero = numero;
 		this.rua = rua;
 		this.bairro = bairro;
@@ -49,7 +52,6 @@ public class Endereco {
 	public Endereco(long id, String numero, String rua, String bairro, String complemento, String estado,
 			String cep) {
 		this.id = id;
-//		this.pessoa = pessoa;
 		this.numero = numero;
 		this.rua = rua;
 		this.bairro = bairro;
@@ -61,14 +63,6 @@ public class Endereco {
 	public long getId() {
 		return id;
 	}
-
-//	public Pessoa getPessoa() {
-//		return pessoa;
-//	}
-
-//	public void setPessoa(Pessoa pessoa) {
-///		this.pessoa = pessoa;
-///	}
 
 	public String getNumero() {
 		return numero;

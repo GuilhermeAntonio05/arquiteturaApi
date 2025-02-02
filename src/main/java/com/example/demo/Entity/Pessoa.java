@@ -33,6 +33,10 @@ public class Pessoa {
 	@JoinColumn(name = "PESSOA_ID ")
 	private List<Contato> contato;
 	
+	@OneToMany
+	@JoinColumn(name = "PESSOA_ID ")
+	private List<Endereco> endereco;
+	
 	@Column
 	private double salario;
 	
@@ -55,8 +59,9 @@ public class Pessoa {
 	}
 	
 	public Pessoa(String nome, Setor setor, double salario, String dataNascimento, String cpf, String cnh, String oab,
-			String inscricaoFederal, List<Contato> contato) {
+			String inscricaoFederal, List<Contato> contato, List<Endereco> endereco) {
 		super();
+		this.endereco = endereco;
 		this.contato = contato;
 		this.nome = nome;
 		this.setor = setor;
@@ -69,8 +74,9 @@ public class Pessoa {
 	}
 
 	public Pessoa(long id, String nome, Setor setor, double salario, String dataNascimento, String cpf, String cnh,
-			String oab, String inscricaoFederal, List<Contato> contato) {
+			String oab, String inscricaoFederal, List<Contato> contato, List<Endereco> endereco) {
 		super();
+		this.endereco = endereco;
 		this.contato = contato;
 		this.id = id;
 		this.nome = nome;
@@ -159,10 +165,19 @@ public class Pessoa {
 		this.contato = contato;
 	}
 	
+	public void setEndereco(List<Endereco> endereco) {
+		this.endereco = endereco;
+	}
+	
+	public List<Endereco> getEndereco() {
+		return endereco;
+	}
+
 	@Override
 	public String toString() {
-		return "Pessoa [id=" + id + ", nome=" + nome + ", setor=" + setor + ", salario=" + salario + ", dataNascimento="
-				+ dataNascimento + ", cpf=" + cpf + ", cnh=" + cnh + ", oab=" + oab + ", inscricaoFederal="
-				+ inscricaoFederal + "]";
+		return "Pessoa [id=" + id + ", nome=" + nome + ", setor=" + setor + ", contato=" + contato + ", endereco="
+				+ endereco + ", salario=" + salario + ", dataNascimento=" + dataNascimento + ", cpf=" + cpf + ", cnh="
+				+ cnh + ", oab=" + oab + ", inscricaoFederal=" + inscricaoFederal + "]";
 	}
+	
 }

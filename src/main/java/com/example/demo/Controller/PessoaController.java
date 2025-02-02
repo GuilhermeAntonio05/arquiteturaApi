@@ -1,6 +1,5 @@
 package com.example.demo.Controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.Entity.Contato;
 import com.example.demo.Entity.Pessoa;
-import com.example.demo.Entity.Setor;
 import com.example.demo.Repository.ContatoRepository;
+import com.example.demo.Repository.EnderecoRepository;
 import com.example.demo.Repository.PessoaRepository;
 import com.example.demo.Repository.SetorRepository;
 
@@ -32,9 +30,12 @@ public class PessoaController {
 
 	@Autowired
 	private SetorRepository setorRepository;
+
+	@Autowired
+	private ContatoRepository contatoRepository;
 	
 	@Autowired
-	private  ContatoRepository contatoRepository;
+	private EnderecoRepository enderecoRepository;
 
 	@GetMapping
 	public List<Pessoa> listarPessoas() {
@@ -50,15 +51,9 @@ public class PessoaController {
 
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void criarPessoa(
-			//@RequestBody Pessoa pessoa
-			) {
-		Setor setor = new Setor("Gerente","8");
-		List<Contato> contatos = new ArrayList<Contato>();
-		contatos.add(new Contato("Email","guilhermeantonio@gmail.com"));
-		contatos.add(new Contato("Telefone","47 997660815"));
-		Pessoa pessoa = new Pessoa("Guilherme",setor,2000,"05/04/2007","123456","123","123","inscFederal",contatos);
-		contatoRepository.saveAll(contatos);
+	public void criarPessoa(@RequestBody Pessoa pessoa) {
+		enderecoRepository.saveAll(pessoa.getEndereco());
+		contatoRepository.saveAll(pessoa.getContato());
 		setorRepository.save(pessoa.getSetor());
 		pessoaRepository.save(pessoa);
 	}
@@ -81,17 +76,21 @@ public class PessoaController {
 		}
 	}
 
-	private void getPessoa(Pessoa PessoaExistente, Pessoa NovaPessoa) {
-		PessoaExistente.setCnh(NovaPessoa.getCnh());
-		PessoaExistente.setCpf(NovaPessoa.getCpf());
-		PessoaExistente.setDataNascimento(NovaPessoa.getDataNascimento());
-		PessoaExistente.setInscricaoFederal(NovaPessoa.getInscricaoFederal());
-		PessoaExistente.setNome(NovaPessoa.getNome());
-		PessoaExistente.setOab(NovaPessoa.getOab());
-		PessoaExistente.setSalario(NovaPessoa.getSalario());
-		PessoaExistente.setSetor(NovaPessoa.getSetor());
-		setorRepository.save(PessoaExistente.getSetor());
-		pessoaRepository.save(PessoaExistente);
+	private void getPessoa(Pessoa pessoaExistente, Pessoa novaPessoa) {
+		pessoaExistente.setCnh(novaPessoa.getCnh());
+		pessoaExistente.setCpf(novaPessoa.getCpf());
+		pessoaExistente.setDataNascimento(novaPessoa.getDataNascimento());
+		pessoaExistente.setInscricaoFederal(novaPessoa.getInscricaoFederal());
+		pessoaExistente.setNome(novaPessoa.getNome());
+		pessoaExistente.setOab(novaPessoa.getOab());
+		pessoaExistente.setSalario(novaPessoa.getSalario());
+		pessoaExistente.setSetor(novaPessoa.getSetor());
+		pessoaExistente.setContato(novaPessoa.getContato());
+		pessoaExistente.setEndereco(novaPessoa.getEndereco());
+		enderecoRepository.saveAll(pessoaExistente.getEndereco());
+		contatoRepository.saveAll(pessoaExistente.getContato());
+		setorRepository.save(pessoaExistente.getSetor());
+		pessoaRepository.save(pessoaExistente);
 	}
 
 }
