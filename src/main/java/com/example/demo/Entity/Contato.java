@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,9 +16,9 @@ public class Contato {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	// @Column
-	// private Pessoa pessoa;
-
+	@ManyToOne
+	private Pessoa pessoa;
+	
 	@Column
 	private String tipo;
 
@@ -42,14 +43,6 @@ public class Contato {
 	public long getId() {
 		return id;
 	}
-
-	//// public Pessoa getPessoa() {
-	/// return pessoa;
-	/// }
-
-	/// public void setPessoa(Pessoa pessoa) {
-	//// this.pessoa = pessoa;
-	//// }
 
 	public String getTipo() {
 		return tipo;

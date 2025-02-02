@@ -14,9 +14,6 @@ public class Endereco {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	//@Column
-//	private Pessoa pessoa;
-	
 	@Column
 	private String numero;
 	

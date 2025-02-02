@@ -1,10 +1,14 @@
 package com.example.demo.Entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
@@ -24,6 +28,10 @@ public class Pessoa {
 
 	@OneToOne
 	private Setor setor;
+	
+	@OneToMany
+	@JoinColumn(name = "PESSOA_ID ")
+	private List<Contato> contato;
 	
 	@Column
 	private double salario;
@@ -47,8 +55,9 @@ public class Pessoa {
 	}
 	
 	public Pessoa(String nome, Setor setor, double salario, String dataNascimento, String cpf, String cnh, String oab,
-			String inscricaoFederal) {
+			String inscricaoFederal, List<Contato> contato) {
 		super();
+		this.contato = contato;
 		this.nome = nome;
 		this.setor = setor;
 		this.salario = salario;
@@ -60,8 +69,9 @@ public class Pessoa {
 	}
 
 	public Pessoa(long id, String nome, Setor setor, double salario, String dataNascimento, String cpf, String cnh,
-			String oab, String inscricaoFederal) {
+			String oab, String inscricaoFederal, List<Contato> contato) {
 		super();
+		this.contato = contato;
 		this.id = id;
 		this.nome = nome;
 		this.setor = setor;
@@ -141,6 +151,14 @@ public class Pessoa {
 		return id;
 	}
 
+	public List<Contato> getContato() {
+		return contato;
+	}
+	
+	public void setContato(List<Contato> contato) {
+		this.contato = contato;
+	}
+	
 	@Override
 	public String toString() {
 		return "Pessoa [id=" + id + ", nome=" + nome + ", setor=" + setor + ", salario=" + salario + ", dataNascimento="
