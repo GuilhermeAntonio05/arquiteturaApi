@@ -3,6 +3,7 @@ package com.example.demo.Controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,52 +28,51 @@ import com.example.demo.Repository.SetorRepository;
 public class PessoaController {
 
 	@Autowired
-	private PessoaRepository pessoaRepository;
+	private PessoaService pessoaService;
 
 	@Autowired
-	private SetorRepository setorRepository;
+	private SetorService setorService;
 
 	@Autowired
-	private ContatoRepository contatoRepository;
-	
+	private ContatoService contatoService;
+
 	@Autowired
-	private EnderecoRepository enderecoRepository;
-	
+	private EnderecoService enderecoService;
+
 	@Autowired
-	private DocumentoRepository documentoRepository;
+	private DocumentoService documentoService;
 
 	@GetMapping
 	public List<Pessoa> listarPessoas() {
-		List<Pessoa> pessoa = pessoaRepository.findAll();
+		List<Pessoa> pessoa = pessoaService.listaPessoa();
 		return pessoa;
 	}
 
 	@GetMapping("/{id}")
 	public Optional<Pessoa> listarPessoa(@PathVariable(name = "id") Long id) {
-		Optional<Pessoa> pessoa = pessoaRepository.findById(id);
+		Optional<Pessoa> pessoa = pessoaService.buscarPorId(id);
 		return pessoa;
 	}
 
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void criarPessoa(
-			@RequestBody Pessoa pessoa
-			) {
-		documentoRepository.saveAll(pessoa.getDocumento());
-		enderecoRepository.saveAll(pessoa.getEndereco());
-		contatoRepository.saveAll(pessoa.getContato());
-		setorRepository.save(pessoa.getSetor());
-		pessoaRepository.save(pessoa);
+	public void criarPessoa(@RequestBody Pessoa pessoa) {
+		documentoService.salvarTodos(pessoa.getDocumento());
+		enderecoService.salvarTodos(pessoa.getEndereco());
+		contatoService.salvarTodos(pessoa.getContato());
+		setorService.salvar(pessoa.getSetor());
+		pessoaService.salvar(pessoa);
+
 	}
 
 	@DeleteMapping("/{id}")
 	public void removerPessoa(@PathVariable(name = "id") Long id) {
-		pessoaRepository.deleteById(id);
+		pessoaService.removerPorId(id);
 	}
 
 	@PutMapping("/{id}")
 	public void atualizarPessoa(@PathVariable("id") Long id, @RequestBody Pessoa pessoa) {
-		Optional<Pessoa> pessoaById = pessoaRepository.findById(id);
+		Optional<Pessoa> pessoaById = pessoaService.buscarPorId(id);
 
 		if (pessoaById.isPresent()) {
 			Pessoa pessoaExistente = pessoaById.get();
@@ -92,12 +92,12 @@ public class PessoaController {
 		pessoaExistente.setContato(novaPessoa.getContato());
 		pessoaExistente.setEndereco(novaPessoa.getEndereco());
 		pessoaExistente.setDocumento(novaPessoa.getDocumento());
-		
-		contatoRepository.saveAll(pessoaExistente.getContato());
-		enderecoRepository.saveAll(pessoaExistente.getEndereco());
-		setorRepository.save(pessoaExistente.getSetor());
-		documentoRepository.saveAll(pessoaExistente.getDocumento());
-		pessoaRepository.save(pessoaExistente);
+
+		contatoService.salvarTodos(pessoaExistente.getContato());
+		enderecoService.salvarTodos(pessoaExistente.getEndereco());
+		setorService.salvar(pessoaExistente.getSetor());
+		documentoService.salvarTodos(pessoaExistente.getDocumento());
+		pessoaService.salvar(pessoaExistente);
 	}
 
 }
