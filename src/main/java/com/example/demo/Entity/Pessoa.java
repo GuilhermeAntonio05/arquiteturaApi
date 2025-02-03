@@ -2,6 +2,7 @@ package com.example.demo.Entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,18 +27,18 @@ public class Pessoa {
 	@Column
 	private String nome;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Setor setor;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PESSOA_ID ")
 	private List<Contato> contato;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PESSOA_ID ")
 	private List<Endereco> endereco;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PESSOA_ID ")
 	private List<Documento> documento;
 	

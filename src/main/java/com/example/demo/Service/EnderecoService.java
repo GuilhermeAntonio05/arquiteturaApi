@@ -1,14 +1,13 @@
 package com.example.demo.Service;
 
-import com.example.demo.Entity.Documento;
-import com.example.demo.Entity.Endereco;
-import com.example.demo.Repository.EnderecoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Entity.Endereco;
+import com.example.demo.Repository.EnderecoRepository;
 @Service
 public class EnderecoService {
 

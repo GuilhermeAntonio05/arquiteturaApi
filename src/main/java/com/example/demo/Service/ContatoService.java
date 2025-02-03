@@ -1,7 +1,6 @@
 package com.example.demo.Service;
 
 import com.example.demo.Entity.Contato;
-import com.example.demo.Entity.Documento;
 import com.example.demo.Repository.ContatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
